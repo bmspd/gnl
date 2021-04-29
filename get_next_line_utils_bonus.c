@@ -87,4 +87,3 @@ int	search_n(char *current)
 	}
 	return (0);
 }
-

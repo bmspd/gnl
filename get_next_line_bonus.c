@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*moving_pointer(char *old_string)
 {
@@ -58,7 +58,7 @@ static int	what_to_return(int reading)
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*current;
+	static char	*current[10000];
 	char		*buff;
 	int			reading;
 
@@ -68,7 +68,7 @@ int	get_next_line(int fd, char **line)
 	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (-1);
-	while (!search_n(current) && reading != 0)
+	while (!search_n(current[fd]) && reading != 0)
 	{
 		reading = read(fd, buff, BUFFER_SIZE);
 		if (reading == -1)
@@ -77,10 +77,10 @@ int	get_next_line(int fd, char **line)
 			return (-1);
 		}
 		buff[reading] = '\0';
-		current = ft_strjoin(current, buff);
+		current[fd] = ft_strjoin(current[fd], buff);
 	}
 	free(buff);
-	*line = write_to_delim(current);
-	current = moving_pointer(current);
+	*line = write_to_delim(current[fd]);
+	current[fd] = moving_pointer(current[fd]);
 	return (what_to_return(reading));
 }

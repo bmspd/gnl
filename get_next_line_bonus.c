@@ -1,5 +1,34 @@
 #include "get_next_line_bonus.h"
 
+static char	*ft_strjoin_gnl(char *s1, char const *s2)
+{
+	char			*join;
+	unsigned int	sumlen;
+	size_t			i;
+	size_t			j;
+	unsigned int	len1;
+
+	i = 0;
+	j = 0;
+	if (!s1)
+		return (ft_strdup(s2));
+	len1 = ft_strlen(s1);
+	sumlen = len1 + ft_strlen(s2);
+	join = malloc((sumlen + 1) * sizeof(char));
+	if (!join)
+		return (0);
+	while (s1[i])
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	free(s1);
+	while (s2[j])
+		join[i++] = s2[j++];
+	join[i] = '\0';
+	return (join);
+}
+
 static char	*moving_pointer(char *old_string)
 {
 	char	*new_string;
@@ -77,7 +106,7 @@ int	get_next_line(int fd, char **line)
 			return (-1);
 		}
 		buff[reading] = '\0';
-		current[fd] = ft_strjoin(current[fd], buff);
+		current[fd] = ft_strjoin_gnl(current[fd], buff);
 	}
 	free(buff);
 	*line = write_to_delim(current[fd]);

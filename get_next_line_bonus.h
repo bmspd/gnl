@@ -7,8 +7,8 @@
 char	*ft_strjoin(char *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
-int		search_n(char *current);
-
+char	*ft_strrchr(const char *s, int c);
+int	search_n(char *current);
 int		get_next_line(int fd, char **line);
 
 #endif
